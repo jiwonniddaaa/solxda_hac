@@ -1,0 +1,59 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.3.1'
+	id 'io.spring.dependency-management' version '1.1.5'
+}
+
+group = 'com.solux'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+
+sourceSets {
+	main {
+		resources {
+			srcDir 'src/main/resources'
+		}
+	}
+}
+
+repositories {
+	mavenCentral()
+	jcenter()
+	}
+
+dependencies {
+	// Spring Boot and Web
+	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'com.fasterxml.jackson.core:jackson-databind'
+
+	// PMML Evaluator
+	implementation 'org.jpmml:pmml-evaluator-metro:1.6.5'
+	implementation 'org.jpmml:pmml-model:1.6.5'
+
+	// JAXB API and Jakarta
+	implementation 'javax.xml.bind:jaxb-api:2.3.1'
+	implementation 'org.glassfish.jaxb:jaxb-runtime:4.0.2'
+	implementation 'org.glassfish.jaxb:jaxb-core:4.0.2'
+
+	// Testing
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	// ONNX
+	implementation 'com.microsoft.onnxruntime:onnxruntime:1.11.0'
+	implementation 'org.jsoup:jsoup:1.13.1'
+}
+
+tasks.withType(ProcessResources) {
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
